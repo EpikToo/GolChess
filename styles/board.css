@@ -1,0 +1,28 @@
+#board_grid {
+    width: 720px;
+    height: 720px;
+    display: grid;
+    grid-template-columns: 90px 90px 90px 90px 90px 90px 90px 90px;
+}
+.square {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.white {
+    background-color: rgb(230, 230, 230);
+}
+.black {
+    background-color: #314971;
+}
+
+#board{
+    display: inline-block;
+}
+
+#coordinateDisplay {
+    margin-left: 250px;
+    display: inline-block;
+}
