@@ -18,6 +18,10 @@
     background-color: #314971;
 }
 
+.selected {
+    background-color: #7d0a0a;
+}
+
 #board{
     display: inline-block;
 }
