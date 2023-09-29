@@ -26,6 +26,19 @@ const pieceMap = {
     'P': '<img src="../pieces/Chess_pdt60.png" alt="Black Pawn">',
     ' ': '',
 };
+function initBoard() {
+    if (board && coordinateDisplay) {
+        for (let y = 8; y >= 1; y--) {
+            for (let x = 1; x <= 8; x++) {
+                const piece = initialSetup[y][x - 1];
+                const square = createSquare(piece);
+                square.className = 'square ' + ((y + x) % 2 === 0 ? 'white' : 'black');
+                square.addEventListener('click', () => onSquareClick(x, y, piece));
+                board.appendChild(square);
+            }
+        }
+    }
+}
 
 function createSquare(piece) {
     const square = document.createElement('div');
@@ -34,18 +47,12 @@ function createSquare(piece) {
     return square;
 }
 
-if (board && coordinateDisplay) {
-    for (let y = 8; y >= 1; y--) {
-        for (let x = 1; x <= 8; x++) {
-            const piece = initialSetup[y][x - 1];
-            const square = createSquare(piece);
-            square.className = 'square ' + ((y + x) % 2 === 0 ? 'white' : 'black');
-            square.addEventListener('click', () => {
-                const coord = `x: ${x}, y: ${y}`;
-                console.log(coord);
-                coordinateDisplay.textContent = 'Case: ' + coord + ' Piece :';
-            });
-            board.appendChild(square);
-        }
+function onSquareClick(x, y, piece) {
+    const coord = `x: ${x}, y: ${y}`;
+    console.log(`Coord: ${coord}, Piece: ${piece}`);
+    if (coordinateDisplay) {
+        coordinateDisplay.textContent = `Case: ${coord}, Piece: ${piece}`;
     }
 }
+
+initBoard();
