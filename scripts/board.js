@@ -29,20 +29,33 @@ const pieceMap = {
     'bp': '<img src="../pieces/Chess_pdt60.png" alt="Black Pawn">',
     '  ': '',
 };
+let selectedSquare = null;
+let player_color = "";
+let player_turn = false;
+let player_selected_coords = "";
+let player_selected_piece = "";
+let player_has_piece = false;
 
 // Initiate the board, create the grid and place the pieces
 function initBoard() {
-    if (board && coordinateDisplay) {
-        for (let y = 8; y >= 1; y--) {
-            for (let x = 1; x <= 8; x++) {
-                const piece = initialSetup[y][x - 1];
-                const square = createSquare(piece);
-                square.className = 'square ' + ((y + x) % 2 === 0 ? 'white' : 'black');
-                square.addEventListener('click', () => onSquareClick(x, y, piece));
-                board.appendChild(square);
-            }
+    for (let y = 8; y >= 1; y--) {
+        for (let x = 1; x <= 8; x++) {
+            const piece = initialSetup[y][x - 1];
+            const square = createSquare(piece);
+            square.className = 'square ' + ((y + x) % 2 === 0 ? 'white' : 'black');
+            square.addEventListener('click', () => onSquareClick(x, y, piece, square));
+            board.appendChild(square);
         }
     }
+    if (Math.floor(Math.random() * 2) === 0){
+        player_color = "w"
+        player_turn = true;
+    }
+    else{
+        player_color = "b"
+        player_turn = false;
+    }
+    console.log("Player color is: " + player_color);
 }
 
 // Place the pieces on the board depending on the initial layout
@@ -53,13 +66,41 @@ function createSquare(piece) {
     return square;
 }
 
-// Give the coordinates and the piece of the player's click
-function onSquareClick(x, y, piece) {
+// Mangage board interaction
+function onSquareClick(x, y, piece, squareElement) {
     const coord = `x: ${x}, y: ${y}`;
-    console.log(`Coord: ${coord}, Piece: ${piece}`);
-    if (coordinateDisplay) {
-        coordinateDisplay.textContent = `Case: ${coord}, Piece: ${piece}`;
+    console.log(`Player Color: ${player_color}, Case: ${coord}, Piece: ${piece}`);
+    coordinateDisplay.textContent = `Player Color: ${player_color}, Case: ${coord}, Piece: ${piece}`;
+    if (!player_has_piece) {
+        if (selectedSquare === squareElement) {
+            squareElement.classList.remove('selected');
+            selectedSquare = null;
+        } else {
+            if (selectedSquare) {
+                selectedSquare.classList.remove('selected');
+            }
+            squareElement.classList.add('selected');
+            selectedSquare = squareElement;
+        }
+        if (player_turn && piece[0] === player_color) {
+            player_has_piece = true;
+            player_selected_piece = piece;
+            player_selected_coords = coord;
+        }
     }
+    else if (coord === player_selected_coords && piece === player_selected_piece){
+        selectedSquare.classList.remove('selected');
+        selectedSquare = null;
+        player_has_piece = false;
+    }
+    else {
+        movePiece()
+    }
+}
+
+function movePiece()
+{
+
 }
 
 initBoard();
