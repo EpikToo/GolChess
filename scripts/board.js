@@ -98,9 +98,41 @@ function onSquareClick(x, y, piece, squareElement) {
     }
 }
 
+// Manage piece moves
 function movePiece()
 {
-
+    if (player_selected_piece[0] === 'w') {
+        switch (player_selected_piece) {
+            case ('wp'): // White Pawn
+                break;
+            case ('wn'): // White Knight
+                break;
+            case ('wb'): // White Bishop
+                break;
+            case ('wr'): // White Rook
+                break;
+            case ('wq'): // White Queen
+                break;
+            case ('wk'): // White King
+                break;
+        }
+    }
+    else if (player_selected_piece[0] === 'b') {
+        switch (player_selected_piece) {
+            case ('bp'): // Black Pawn
+                break;
+            case ('bn'): // Black Knight
+                break;
+            case ('bb'): // Black Bishop
+                break;
+            case ('br'): // Black Rook
+                break;
+            case ('bq'): // Black Queen
+                break;
+            case ('bk'): // Black King
+                break;
+        }
+    }
 }
 
 initBoard();
